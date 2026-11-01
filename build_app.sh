@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 
 TOOLS=/Volumes/SKYRIM/TOOLS
 DEST="${MLINKS_INSTALL_DIR:-$HOME/Applications/Applications Personnelles}"
-VERSION="${VERSION:-1.1.1}"
+VERSION="${VERSION:-1.1.2}"
 BUILD="$(git rev-list --count HEAD 2>/dev/null || echo 1)"
 
 # Socle vit hors de l'arborescence parcourue par sync_apps.sh : copie reprise à chaque build.

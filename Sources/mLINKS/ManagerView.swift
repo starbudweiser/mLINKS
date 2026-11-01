@@ -62,6 +62,8 @@ struct ManagerView: View {
         } message: {
             Text(L("group.delete.text", groupToDelete?.links.count ?? 0))
         }
+        // Sélection explicite dès l'ouverture : déplacer le premier groupe ne doit pas faire sauter la sélection.
+        .onAppear { selectedGroup = selectedGroup ?? store.library.groups.first?.id }
         .onChange(of: store.saveFailed) { _, failed in
             if failed { notice = Notice(text: L("save.failed"), isError: true) }
         }
@@ -124,13 +126,17 @@ struct ManagerView: View {
                     ScrollView {
                         VStack(spacing: 2) {
                             ForEach(group.links) { item in
-                                LinkRow(link: item, selected: item.id == selectedLink)
-                                    .contentShape(Rectangle())
-                                    .onTapGesture { selectedLink = item.id }
-                                    .draggable("link:\(item.id.uuidString)")
-                                    .onDrop(of: [.fileURL, .plainText], isTargeted: nil) { providers in
-                                        Drops.handle(providers, store: store, group: group.id, before: item.id)
-                                    }
+                                let index = group.links.firstIndex { $0.id == item.id } ?? 0
+                                let next = group.links.indices.contains(index + 1) ? group.links[index + 1].id : nil
+                                ReorderRow(token: "link:\(item.id.uuidString)") { providers, below in
+                                    Drops.handle(providers, store: store, target: .init(group: group.id, before: below ? next : item.id))
+                                } content: {
+                                    LinkRow(link: item, selected: item.id == selectedLink,
+                                            canGoUp: index > 0, canGoDown: next != nil)
+                                        .contentShape(Rectangle())
+                                        .onTapGesture { selectedLink = item.id }
+                                        .contextMenu { linkMenu(item, in: group, index: index) }
+                                }
                             }
                         }
                         .padding(.horizontal, Socle.M.space3).padding(.bottom, Socle.M.space3)
@@ -141,7 +147,21 @@ struct ManagerView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .contentShape(Rectangle())
         .onDrop(of: [.fileURL, .plainText], isTargeted: nil) { providers in
-            Drops.handle(providers, store: store, group: group?.id, before: nil)
+            Drops.handle(providers, store: store, target: .init(group: group?.id))
+        }
+    }
+
+    @ViewBuilder
+    private func linkMenu(_ item: LinkItem, in group: LinkGroup, index: Int) -> some View {
+        Button(L("order.up")) { store.mutate { $0.moveLink(item.id, by: -1) } }.disabled(index == 0)
+        Button(L("order.down")) { store.mutate { $0.moveLink(item.id, by: 1) } }.disabled(index == group.links.count - 1)
+        let others = store.library.groups.filter { $0.id != group.id }
+        if !others.isEmpty {
+            Menu(L("order.moveto")) {
+                ForEach(others) { other in
+                    Button(other.name) { store.mutate { $0.moveLink(item.id, to: other.id) } }
+                }
+            }
         }
     }
 
@@ -208,8 +228,19 @@ struct ManagerView: View {
 
 @MainActor
 enum Drops {
+    /// Où va un dépôt : `reordersGroups` seulement sur la liste des groupes, avec `groupBefore` (nil : à la fin).
+    struct Target {
+        var group: UUID?
+        var before: UUID?
+        var reordersGroups = false
+        var groupBefore: UUID?
+    }
+
+    /// Ce qui est en cours de déplacement dans la fenêtre : un dépôt ne se lit qu'une fois lâché, le survol a besoin de le savoir avant.
+    static var dragged: String?
+
     /// Fichiers du Finder : ajoutés. Lien ou groupe déplacé dans la fenêtre : texte `link:<id>` ou `group:<id>`.
-    static func handle(_ providers: [NSItemProvider], store: LinkStore, group: UUID?, before: UUID?) -> Bool {
+    static func handle(_ providers: [NSItemProvider], store: LinkStore, target: Target) -> Bool {
         var handled = false
         for provider in providers {
             if provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) {
@@ -217,7 +248,7 @@ enum Drops {
                 _ = provider.loadObject(ofClass: URL.self) { url, _ in
                     guard let path = url?.path else { return }
                     DispatchQueue.main.async {
-                        MainActor.assumeIsolated { store.add(targets: [path], to: group, before: before) }
+                        MainActor.assumeIsolated { store.add(targets: [path], to: target.group, before: target.before) }
                     }
                 }
             } else if provider.canLoadObject(ofClass: NSString.self) {
@@ -225,7 +256,7 @@ enum Drops {
                 _ = provider.loadObject(ofClass: NSString.self) { text, _ in
                     guard let token = text as? String else { return }
                     DispatchQueue.main.async {
-                        MainActor.assumeIsolated { apply(token, store: store, group: group, before: before) }
+                        MainActor.assumeIsolated { apply(token, store: store, target: target) }
                     }
                 }
             }
@@ -233,11 +264,12 @@ enum Drops {
         return handled
     }
 
-    private static func apply(_ token: String, store: LinkStore, group: UUID?, before: UUID?) {
-        if token.hasPrefix("link:"), let id = UUID(uuidString: String(token.dropFirst(5))), let group {
-            store.mutate { $0.moveLink(id, to: group, before: before) }
-        } else if token.hasPrefix("group:"), let id = UUID(uuidString: String(token.dropFirst(6))) {
-            store.mutate { $0.moveGroup(id, before: group) }
+    private static func apply(_ token: String, store: LinkStore, target: Target) {
+        dragged = nil
+        if token.hasPrefix("link:"), let id = UUID(uuidString: String(token.dropFirst(5))), let group = target.group {
+            store.mutate { $0.moveLink(id, to: group, before: target.before) }
+        } else if token.hasPrefix("group:"), target.reordersGroups, let id = UUID(uuidString: String(token.dropFirst(6))) {
+            store.mutate { $0.moveGroup(id, before: target.groupBefore) }
         }
     }
 }
@@ -276,7 +308,7 @@ private struct GroupSidebar: View {
             ScrollView {
                 VStack(spacing: 2) {
                     ForEach(store.library.groups) { group in
-                        row(group)
+                        reorderable(group)
                     }
                 }
                 .padding(.horizontal, Socle.M.space2)
@@ -305,7 +337,19 @@ private struct GroupSidebar: View {
         .background(Socle.C.surfaceRaised)
     }
 
-    private func row(_ group: LinkGroup) -> some View {
+    private func reorderable(_ group: LinkGroup) -> some View {
+        let groups = store.library.groups
+        let index = groups.firstIndex { $0.id == group.id } ?? 0
+        let next = groups.indices.contains(index + 1) ? groups[index + 1].id : nil
+        return ReorderRow(token: "group:\(group.id.uuidString)", showsLine: { Drops.dragged?.hasPrefix("group:") == true }) { providers, below in
+            Drops.handle(providers, store: store, target: .init(
+                group: group.id, reordersGroups: true, groupBefore: below ? next : group.id))
+        } content: {
+            row(group, index: index, groups: groups)
+        }
+    }
+
+    private func row(_ group: LinkGroup, index: Int, groups: [LinkGroup]) -> some View {
         let selected = group.id == selectedGroup
         return HStack(spacing: Socle.M.space2) {
             if renaming == group.id {
@@ -318,6 +362,11 @@ private struct GroupSidebar: View {
                 Text(group.name).socle(Socle.T.label).lineLimit(1)
                     .foregroundStyle(selected ? Socle.C.textStrong : Socle.C.text)
                 Spacer(minLength: Socle.M.space2)
+                if selected || hoveredGroup == group.id {
+                    OrderButtons(canGoUp: index > 0, canGoDown: index < groups.count - 1) { offset in
+                        store.mutate { $0.moveGroup(group.id, by: offset) }
+                    }
+                }
                 Text("\(group.links.count)").socle(Socle.T.monoSm).foregroundStyle(Socle.C.textSubtle)
             }
         }
@@ -329,11 +378,9 @@ private struct GroupSidebar: View {
         .onHover { hoveredGroup = $0 ? group.id : nil }
         .onTapGesture(count: 2) { renaming = group.id }
         .onTapGesture { selectedGroup = group.id }
-        .draggable("group:\(group.id.uuidString)")
-        .onDrop(of: [.fileURL, .plainText], isTargeted: nil) { providers in
-            Drops.handle(providers, store: store, group: group.id, before: nil)
-        }
         .contextMenu {
+            Button(L("order.up")) { store.mutate { $0.moveGroup(group.id, by: -1) } }.disabled(index == 0)
+            Button(L("order.down")) { store.mutate { $0.moveGroup(group.id, by: 1) } }.disabled(index == groups.count - 1)
             Button(L("common.rename")) { renaming = group.id }
             Button(L("common.delete"), role: .destructive) {
                 if group.links.isEmpty {
@@ -378,6 +425,8 @@ private struct LinkRow: View {
     @EnvironmentObject private var store: LinkStore
     let link: LinkItem
     let selected: Bool
+    let canGoUp: Bool
+    let canGoDown: Bool
     @State private var hovered = false
 
     var body: some View {
@@ -391,6 +440,11 @@ private struct LinkRow: View {
                     .foregroundStyle(Socle.C.textSubtle)
             }
             Spacer(minLength: Socle.M.space3)
+            if selected || hovered {
+                OrderButtons(canGoUp: canGoUp, canGoDown: canGoDown) { offset in
+                    store.mutate { $0.moveLink(link.id, by: offset) }
+                }
+            }
             if missing {
                 Text(L("status.missing")).socle(Socle.T.meta).foregroundStyle(Socle.C.warning)
             }

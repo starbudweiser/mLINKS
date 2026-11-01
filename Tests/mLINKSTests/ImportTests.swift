@@ -160,3 +160,20 @@ private func makeDatabase() throws -> URL {
     #expect(throws: UpdateError.noRelease) { try UpdateFeed.parse(feed(#""prerelease":true,"#)) }
     #expect(throws: UpdateError.invalidFeed) { try UpdateFeed.parse(Data("{}".utf8)) }
 }
+
+@Test func stepwiseMovesStayInBounds() {
+    let a = LinkItem(name: "a", target: "/a"), b = LinkItem(name: "b", target: "/b")
+    let one = LinkGroup(name: "1", links: [a, b]), two = LinkGroup(name: "2"), three = LinkGroup(name: "3")
+    var library = Library(groups: [one, two, three])
+    library.moveGroup(three.id, by: -1)
+    #expect(library.groups.map(\.name) == ["1", "3", "2"])
+    library.moveGroup(one.id, by: -1)
+    library.moveGroup(two.id, by: 1)
+    #expect(library.groups.map(\.name) == ["1", "3", "2"])
+    library.moveLink(a.id, by: 1)
+    #expect(library.groups[0].links.map(\.name) == ["b", "a"])
+    library.moveLink(a.id, by: 1)
+    #expect(library.groups[0].links.map(\.name) == ["b", "a"])
+    library.moveGroup(one.id, before: nil)
+    #expect(library.groups.map(\.name) == ["3", "2", "1"])
+}

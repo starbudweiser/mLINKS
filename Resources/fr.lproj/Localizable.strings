@@ -45,6 +45,9 @@
 "menu.reveal" = "Afficher « %@ » dans le Finder";
 "open.missing.text" = "%@ n'existe pas ou son disque n'est pas branché.";
 "open.missing.title" = "Impossible d'ouvrir « %@ »";
+"order.down" = "Descendre";
+"order.moveto" = "Déplacer vers";
+"order.up" = "Monter";
 "save.failed" = "Impossible d'enregistrer vos liens. Vérifiez qu'il reste de la place sur le disque de démarrage.";
 "settings.autoupdate" = "Mises à jour automatiques";
 "settings.login" = "Lancer à l'ouverture de session";

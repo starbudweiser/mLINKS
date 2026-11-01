@@ -45,6 +45,9 @@
 "menu.reveal" = "Mostra «%@» nel Finder";
 "open.missing.text" = "%@ non esiste o il suo disco non è collegato.";
 "open.missing.title" = "Impossibile aprire «%@»";
+"order.down" = "Sposta giù";
+"order.moveto" = "Sposta in";
+"order.up" = "Sposta su";
 "save.failed" = "Impossibile salvare i collegamenti. Controlla che ci sia spazio sul disco di avvio.";
 "settings.autoupdate" = "Aggiornamenti automatici";
 "settings.login" = "Avvia all'accesso";

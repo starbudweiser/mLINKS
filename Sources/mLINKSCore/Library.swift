@@ -149,6 +149,21 @@ public struct Library: Codable, Equatable, Sendable {
         groups.insert(group, at: index)
     }
 
+    /// Décale un groupe dans la liste (-1 : vers le haut, 1 : vers le bas), sans sortir des bornes.
+    public mutating func moveGroup(_ id: UUID, by offset: Int) {
+        guard let from = groups.firstIndex(where: { $0.id == id }) else { return }
+        let to = min(max(from + offset, 0), groups.count - 1)
+        groups.insert(groups.remove(at: from), at: to)
+    }
+
+    /// Décale un lien dans son groupe (-1 : vers le haut, 1 : vers le bas), sans sortir des bornes.
+    public mutating func moveLink(_ id: UUID, by offset: Int) {
+        guard let g = groups.firstIndex(where: { $0.links.contains { $0.id == id } }),
+              let from = groups[g].links.firstIndex(where: { $0.id == id }) else { return }
+        let to = min(max(from + offset, 0), groups[g].links.count - 1)
+        groups[g].links.insert(groups[g].links.remove(at: from), at: to)
+    }
+
     /// Ajoute des groupes importés sans rien retirer : un groupe de même nom est complété, un lien
     /// dont la cible s'y trouve déjà est ignoré, un raccourci déjà pris est abandonné.
     @discardableResult

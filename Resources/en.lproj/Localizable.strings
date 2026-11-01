@@ -45,6 +45,9 @@
 "menu.reveal" = "Show “%@” in Finder";
 "open.missing.text" = "%@ does not exist or its disk is not connected.";
 "open.missing.title" = "Cannot open “%@”";
+"order.down" = "Move down";
+"order.moveto" = "Move to";
+"order.up" = "Move up";
 "save.failed" = "Your links cannot be saved. Check that the startup disk has free space.";
 "settings.autoupdate" = "Automatic updates";
 "settings.login" = "Launch at login";
