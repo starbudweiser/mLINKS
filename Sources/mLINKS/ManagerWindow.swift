@@ -24,7 +24,6 @@ enum ManagerWindow {
             window?.orderBack(nil)
             return
         }
-        NSApp.activate()
-        window?.makeKeyAndOrderFront(nil)
+        window?.present()
     }
 }
