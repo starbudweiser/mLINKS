@@ -301,6 +301,7 @@ private struct GroupSidebar: View {
             }
             .padding(Socle.M.space3)
         }
+        .socleWatermark { LinkMark() }
         .background(Socle.C.surfaceRaised)
     }
 
