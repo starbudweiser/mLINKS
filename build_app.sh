@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 TOOLS=/Volumes/SKYRIM/TOOLS
-DEST="${MLINKS_INSTALL_DIR:-$HOME/Applications/Home Applications}"
+DEST="${MLINKS_INSTALL_DIR:-$HOME/Applications/Applications Personnelles}"
 VERSION="${VERSION:-1.1}"
 BUILD="$(git rev-list --count HEAD 2>/dev/null || echo 1)"
 
