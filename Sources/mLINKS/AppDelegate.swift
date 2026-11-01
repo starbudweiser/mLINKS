@@ -21,6 +21,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         store.bindHotkeys()
         store.refreshTargets()
 
+        // Essais : la fenêtre s'ouvre derrière le travail en cours, sans prendre le focus.
+        if CommandLine.arguments.contains("--gestion-discrete") { ManagerWindow.show(store: store, quietly: true) }
+
         let center = NSWorkspace.shared.notificationCenter
         for name in [NSWorkspace.didMountNotification, NSWorkspace.didUnmountNotification] {
             observers.append(center.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in

@@ -7,7 +7,7 @@ enum ManagerWindow {
     static let defaultSize = NSSize(width: 1040, height: 640)
     private static var window: NSWindow?
 
-    static func show(store: LinkStore) {
+    static func show(store: LinkStore, quietly: Bool = false) {
         if window == nil {
             let created = NSWindow(contentRect: NSRect(origin: .zero, size: defaultSize),
                                    styleMask: [.titled, .closable, .miniaturizable, .resizable],
@@ -19,6 +19,10 @@ enum ManagerWindow {
             created.center()
             created.setFrameAutosaveName("gestion")
             window = created
+        }
+        if quietly {
+            window?.orderBack(nil)
+            return
         }
         NSApp.activate()
         window?.makeKeyAndOrderFront(nil)
