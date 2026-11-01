@@ -11,6 +11,7 @@ Your apps, folders, files and web addresses one click away, from the macOS menu 
 - **Global shortcuts**: one per link, no Accessibility permission needed.
 - **Manager window**: create, rename and reorder groups, drag and drop from Finder, hide links from the menu.
 - **Import from QuickLinks**: reads the QuickLinks (Appyogi) database or a `.CSV` export, never modifies them, and never creates duplicates when re-imported.
+- **Automatic updates**: checks GitHub releases once a day (can be turned off), verifies the Developer ID signature and notarization, then replaces and relaunches the app from the menu.
 - **Four languages** (French, English, Spanish, Italian), picked from the system language.
 - Dark, flat interface; no Dock icon; optional launch at login.
 

@@ -252,6 +252,7 @@ private struct GroupSidebar: View {
     @State private var renaming: UUID?
     @State private var startAtLogin = SMAppService.mainApp.status == .enabled
     @State private var hoveredGroup: UUID?
+    @AppStorage("autoUpdate") private var autoUpdate = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -291,6 +292,9 @@ private struct GroupSidebar: View {
                 .buttonStyle(SocleButtonStyle(.secondary))
                 .fixedSize()
                 Toggle(L("settings.login"), isOn: Binding(get: { startAtLogin }, set: setLogin))
+                    .toggleStyle(.checkbox)
+                    .socle(Socle.T.body)
+                Toggle(L("settings.autoupdate"), isOn: $autoUpdate)
                     .toggleStyle(.checkbox)
                     .socle(Socle.T.body)
             }

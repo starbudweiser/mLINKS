@@ -44,6 +44,7 @@
 "open.missing.text" = "%@ non esiste o il suo disco non è collegato.";
 "open.missing.title" = "Impossibile aprire «%@»";
 "save.failed" = "Impossibile salvare i collegamenti. Controlla che ci sia spazio sul disco di avvio.";
+"settings.autoupdate" = "Aggiornamenti automatici";
 "settings.login" = "Avvia all'accesso";
 "shortcut.clear" = "Cancella";
 "shortcut.hint" = "Digita la scorciatoia. Esc per annullare.";
@@ -54,5 +55,16 @@
 "shortcut.taken.system" = "Questa scorciatoia è già usata da un'altra app. Scegline un'altra.";
 "status.hidden" = "Nascosto";
 "status.missing" = "Non trovato";
+"update.check" = "Cerca aggiornamenti…";
+"update.error.check" = "Impossibile raggiungere GitHub. Controlla la connessione e riprova.";
+"update.error.check.title" = "Ricerca impossibile";
+"update.error.download" = "Download non riuscito. La versione attuale non è stata modificata; riprova più tardi.";
+"update.error.notwritable" = "Impossibile sostituire mLINKS dove si trova. Sposta l'app in una cartella di tua proprietà e riprova.";
+"update.error.title" = "Aggiornamento impossibile";
+"update.error.verify" = "L'aggiornamento non è firmato dall'autore di mLINKS ed è stato rifiutato. La versione attuale non è stata modificata.";
+"update.install" = "Installa la versione %@…";
+"update.installing" = "Aggiornamento in corso…";
+"update.uptodate.text" = "Stai usando l'ultima versione (%@).";
+"update.uptodate.title" = "mLINKS è aggiornato";
 "welcome.text" = "Aggiungi app, cartelle e file, oppure riprendi i collegamenti di QuickLinks. QuickLinks non viene modificato.";
 "welcome.title" = "Ancora nessun collegamento";

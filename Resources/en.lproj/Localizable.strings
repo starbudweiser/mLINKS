@@ -44,6 +44,7 @@
 "open.missing.text" = "%@ does not exist or its disk is not connected.";
 "open.missing.title" = "Cannot open “%@”";
 "save.failed" = "Your links cannot be saved. Check that the startup disk has free space.";
+"settings.autoupdate" = "Automatic updates";
 "settings.login" = "Launch at login";
 "shortcut.clear" = "Clear";
 "shortcut.hint" = "Type the shortcut. Press Esc to cancel.";
@@ -54,5 +55,16 @@
 "shortcut.taken.system" = "This shortcut is already taken by another app. Choose a different one.";
 "status.hidden" = "Hidden";
 "status.missing" = "Not found";
+"update.check" = "Check for updates…";
+"update.error.check" = "GitHub cannot be reached. Check your connection and try again.";
+"update.error.check.title" = "Cannot check";
+"update.error.download" = "The download failed. Your current version is unchanged; try again later.";
+"update.error.notwritable" = "mLINKS cannot be replaced where it is. Move the app to a folder you own, then try again.";
+"update.error.title" = "Cannot update";
+"update.error.verify" = "The update is not signed by the author of mLINKS and was refused. Your current version is unchanged.";
+"update.install" = "Install version %@…";
+"update.installing" = "Updating…";
+"update.uptodate.text" = "You are running the latest version (%@).";
+"update.uptodate.title" = "mLINKS is up to date";
 "welcome.text" = "Add your apps, folders and files, or bring in your QuickLinks. QuickLinks is not changed.";
 "welcome.title" = "No links yet";

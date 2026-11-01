@@ -142,3 +142,21 @@ private func makeDatabase() throws -> URL {
     #expect(used.count > 30)
     #expect(used.subtracting(french).isEmpty, "\(used.subtracting(french))")
 }
+
+@Test func versionsCompareNumerically() {
+    #expect(AppVersion("1.10")! > AppVersion("1.9")!)
+    #expect(AppVersion("v2.0")! == AppVersion("2.0.0")!)
+    #expect(AppVersion("1.0.1")! > AppVersion("1.0")!)
+    #expect(AppVersion("abc") == nil && AppVersion("1..2") == nil)
+}
+
+@Test func feedParsing() throws {
+    func feed(_ extra: String = "", asset: String = "mLINKS.zip") -> Data {
+        Data(#"{"tag_name":"v1.2","body":"Notes",\#(extra)"assets":[{"name":"autre.dmg","browser_download_url":"https://x/a.dmg"},{"name":"\#(asset)","browser_download_url":"https://x/mLINKS.zip"}]}"#.utf8)
+    }
+    let release = try UpdateFeed.parse(feed())
+    #expect(release.version == AppVersion("1.2") && release.downloadURL.absoluteString == "https://x/mLINKS.zip" && release.notes == "Notes")
+    #expect(throws: UpdateError.noRelease) { try UpdateFeed.parse(feed(asset: "rien.zip")) }
+    #expect(throws: UpdateError.noRelease) { try UpdateFeed.parse(feed(#""prerelease":true,"#)) }
+    #expect(throws: UpdateError.invalidFeed) { try UpdateFeed.parse(Data("{}".utf8)) }
+}

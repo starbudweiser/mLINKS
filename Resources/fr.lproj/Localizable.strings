@@ -44,6 +44,7 @@
 "open.missing.text" = "%@ n'existe pas ou son disque n'est pas branché.";
 "open.missing.title" = "Impossible d'ouvrir « %@ »";
 "save.failed" = "Impossible d'enregistrer vos liens. Vérifiez qu'il reste de la place sur le disque de démarrage.";
+"settings.autoupdate" = "Mises à jour automatiques";
 "settings.login" = "Lancer à l'ouverture de session";
 "shortcut.clear" = "Effacer";
 "shortcut.hint" = "Tapez le raccourci. Échap pour annuler.";
@@ -54,5 +55,16 @@
 "shortcut.taken.system" = "Ce raccourci est déjà pris par une autre application. Choisissez-en un autre.";
 "status.hidden" = "Masqué";
 "status.missing" = "Introuvable";
+"update.check" = "Rechercher les mises à jour…";
+"update.error.check" = "Impossible de joindre GitHub. Vérifiez votre connexion, puis réessayez.";
+"update.error.check.title" = "Recherche impossible";
+"update.error.download" = "Le téléchargement a échoué. Votre version actuelle n'est pas modifiée ; réessayez plus tard.";
+"update.error.notwritable" = "Impossible de remplacer mLINKS à son emplacement. Déplacez l'appli dans un dossier dont vous êtes propriétaire, puis réessayez.";
+"update.error.title" = "Mise à jour impossible";
+"update.error.verify" = "La mise à jour n'est pas signée par l'auteur de mLINKS : elle a été refusée. Votre version actuelle n'est pas modifiée.";
+"update.install" = "Installer la version %@…";
+"update.installing" = "Mise à jour en cours…";
+"update.uptodate.text" = "Vous utilisez la dernière version (%@).";
+"update.uptodate.title" = "mLINKS est à jour";
 "welcome.text" = "Ajoutez vos applications, dossiers et fichiers, ou reprenez vos liens QuickLinks. QuickLinks n'est pas modifié.";
 "welcome.title" = "Aucun lien pour l'instant";

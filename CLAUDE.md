@@ -9,4 +9,5 @@ des menus ou par raccourci global. Swift, sans bac à sable : aucun blocage sur 
 - Données : `~/Library/Application Support/mLINKS/links.json` (`MLINKS_DATA_DIR` pour les essais).
 - Rien de ce qui touche un volume externe ne s'exécute sur le fil principal (`LinkStore.refreshTargets`, `Opener`).
 - Essais sans fenêtre : `mLINKS --capture sortie.png`, `--capture-about sortie.png`, `--import fichier`.
-- Tests : `swift test`. Build et installation : `./build_app.sh` ou `build_all.sh mLINKS`.
+- Tests : `swift test`. Build et installation (dans ~/Applications/Home Applications) : `./build_app.sh` ou `build_all.sh mLINKS`.
+- Mise à jour automatique : `UpdateManager` lit la dernière release GitHub (mLINKS.zip), vérifie la signature Developer ID (équipe 35KLMK53PN) et la notarisation, remplace l'appli et la relance. Publier : `scripts/release.sh <version>`.

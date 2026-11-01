@@ -5,8 +5,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 TOOLS=/Volumes/SKYRIM/TOOLS
-DEST="${MLINKS_INSTALL_DIR:-$HOME/Applications/Utilitaires+/Productivité}"
-VERSION=1.0
+DEST="${MLINKS_INSTALL_DIR:-$HOME/Applications/Home Applications}"
+VERSION="${VERSION:-1.1}"
 BUILD="$(git rev-list --count HEAD 2>/dev/null || echo 1)"
 
 # Socle vit hors de l'arborescence parcourue par sync_apps.sh : copie reprise à chaque build.

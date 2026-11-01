@@ -11,6 +11,7 @@ Vos applications, dossiers, fichiers et adresses web à portée de clic, depuis 
 - **Raccourcis globaux** : un par lien, sans autorisation d'accessibilité.
 - **Fenêtre de gestion** : créer, renommer et réorganiser les groupes, glisser-déposer depuis le Finder, masquer des liens du menu.
 - **Import depuis QuickLinks** : lit la base de QuickLinks (Appyogi) ou un export `.CSV`, sans jamais les modifier, et sans doublon en cas de réimport.
+- **Mises à jour automatiques** : cherche les releases GitHub une fois par jour (désactivable), vérifie la signature Developer ID et la notarisation, puis remplace et relance l'appli depuis le menu.
 - **Quatre langues** (français, anglais, espagnol, italien), choisies d'après la langue du système.
 - Interface sombre et plate ; pas d'icône dans le Dock ; lancement à l'ouverture de session en option.
 
