@@ -117,7 +117,7 @@ private func makeDatabase() throws -> URL {
     #expect(LinkItem.defaultName(for: "/Applications/Mail.app") == "Mail")
     #expect(LinkItem.defaultName(for: "https://example.com/x") == "example.com")
     #expect(LinkItem.isWeb("https://example.com") && !LinkItem.isWeb("file:///a") && !LinkItem.isWeb("/a"))
-    #expect(Library.volumeRoot(of: "/Volumes/SKYRIM/TOOLS/x") == "/Volumes/SKYRIM")
+    #expect(Library.volumeRoot(of: "/Volumes/Disk/Tools/x") == "/Volumes/Disk")
     #expect(Library.volumeRoot(of: "/Users/me") == "/")
 }
 

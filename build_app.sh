@@ -59,7 +59,11 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 </plist>
 PLIST
 
-"$TOOLS/MAC/_tools/sign_app.sh" "$APP"
+if [ -x "$TOOLS/MAC/_tools/sign_app.sh" ]; then
+    "$TOOLS/MAC/_tools/sign_app.sh" "$APP"
+else
+    codesign --force --deep --sign - "$APP"   # signature ad hoc hors de ma machine
+fi
 
 if [ "${NO_INSTALL:-0}" != 1 ]; then
     mkdir -p "$DEST"
