@@ -113,6 +113,7 @@ struct ManagerView: View {
             } else if let group {
                 HStack {
                     Text(group.name).socle(Socle.T.heading).foregroundStyle(Socle.C.textStrong)
+                    GroupColorButton(group: group)
                     Spacer()
                     Text(L("links.count", group.links.count)).socle(Socle.T.meta).foregroundStyle(Socle.C.textMuted)
                 }
@@ -312,6 +313,7 @@ private struct GroupSidebar: View {
                     renaming = nil
                 }
             } else {
+                if let hex = group.color { Circle().fill(Color(hex: hex)).frame(width: 8, height: 8) }
                 Text(group.name).socle(Socle.T.label).lineLimit(1)
                     .foregroundStyle(selected ? Socle.C.textStrong : Socle.C.text)
                 Spacer(minLength: Socle.M.space2)
@@ -503,5 +505,55 @@ private struct NoticeBar: View {
         .padding(Socle.M.space3)
         .background(Socle.C.surfaceRaised, in: RoundedRectangle(cornerRadius: Socle.M.radius))
         .padding([.horizontal, .top], Socle.M.space3)
+    }
+}
+
+/// Couleur du groupe dans le menu de la barre des menus : une pastille qui ouvre la palette.
+private struct GroupColorButton: View {
+    @EnvironmentObject private var store: LinkStore
+    let group: LinkGroup
+    @State private var open = false
+
+    private func set(_ hex: String?) {
+        store.mutate { library in
+            if let i = library.groups.firstIndex(where: { $0.id == group.id }) { library.groups[i].color = hex }
+        }
+        open = false
+    }
+
+    var body: some View {
+        Button { open.toggle() } label: {
+            ZStack {
+                if let hex = group.color {
+                    Circle().fill(Color(hex: hex))
+                } else {
+                    Circle().stroke(Socle.C.borderControl, lineWidth: 1.5)
+                }
+            }
+            .frame(width: 14, height: 14)
+            .padding(Socle.M.space1)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help(L("group.color"))
+        .popover(isPresented: $open, arrowEdge: .bottom) {
+            VStack(alignment: .leading, spacing: Socle.M.space2) {
+                Text(L("group.color")).socle(Socle.T.label).foregroundStyle(Socle.C.textStrong)
+                HStack(spacing: Socle.M.space2) {
+                    ForEach(GroupColor.palette, id: \.self) { hex in
+                        Button { set(hex) } label: {
+                            Circle().fill(Color(hex: hex)).frame(width: 20, height: 20)
+                                .overlay(Circle().stroke(Socle.C.textStrong, lineWidth: group.color?.uppercased() == hex ? 2 : 0).padding(-3))
+                                .padding(3)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                Button(L("group.color.none")) { set(nil) }
+                    .buttonStyle(SocleButtonStyle(.secondary, height: 26)).fixedSize().disabled(group.color == nil)
+            }
+            .padding(Socle.M.space3)
+            .background(Socle.C.surface)
+        }
     }
 }

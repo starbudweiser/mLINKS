@@ -10,4 +10,5 @@ des menus ou par raccourci global. Swift, sans bac à sable : aucun blocage sur 
 - Rien de ce qui touche un volume externe ne s'exécute sur le fil principal (`LinkStore.refreshTargets`, `Opener`).
 - Essais sans fenêtre : `mLINKS --capture sortie.png`, `--capture-about sortie.png`, `--import fichier`.
 - Tests : `swift test`. Build et installation (dans ~/Applications/Home Applications) : `./build_app.sh` ou `build_all.sh mLINKS`.
+- Menu de la barre des menus : titres colorés par `MenuStyle` (`attributedTitle`) : le « m » du nom (couleur du logo, règle Socle), la couleur d'un groupe (`LinkGroup.color`, #RRGGBB choisi dans la fenêtre de gestion parmi `GroupColor.palette`) et « Gérer les liens… » en jaune Socle (`Socle.C.action`). `mLINKS --dump-menu` décrit le menu et ses couleurs sans l'afficher.
 - Mise à jour automatique : `UpdateManager` lit la dernière release GitHub (mLINKS.zip), vérifie la signature Developer ID (équipe 35KLMK53PN) et la notarisation, remplace l'appli et la relance. Publier : `scripts/release.sh <version>`.

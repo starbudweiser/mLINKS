@@ -22,6 +22,8 @@
 "detail.target" = "Destino";
 "detail.visible" = "Mostrar en el menú";
 "group.add" = "Añadir un grupo";
+"group.color" = "Color en el menú";
+"group.color.none" = "Sin color";
 "group.default" = "General";
 "group.delete.text" = "Los %d enlaces de este grupo se retirarán de mLINKS. No se modifica ningún archivo.";
 "group.delete.title" = "¿Eliminar el grupo «%@»?";

@@ -55,15 +55,34 @@ public struct LinkItem: Codable, Identifiable, Equatable, Sendable {
     }
 }
 
+/// Couleur d'un groupe dans le menu de la barre des menus (au format #RRGGBB).
+public enum GroupColor {
+    /// Teintes proposées : celles de Socle, lisibles sur le fond sombre du menu comme sur le clair.
+    public static let palette = ["#38BDF8", "#34D399", "#FBBF24", "#F97316", "#F87171", "#F472B6", "#A78BFA", "#A3A3A3"]
+
+    public static func isValid(_ hex: String) -> Bool {
+        hex.range(of: "^#[0-9A-Fa-f]{6}$", options: .regularExpression) != nil
+    }
+
+    /// Composantes 0…1 ; nil si la valeur n'est pas une couleur valide (un fichier modifié à la main ne casse rien).
+    public static func components(_ hex: String) -> (red: Double, green: Double, blue: Double)? {
+        guard isValid(hex), let value = UInt32(hex.dropFirst(), radix: 16) else { return nil }
+        return (Double(value >> 16 & 255) / 255, Double(value >> 8 & 255) / 255, Double(value & 255) / 255)
+    }
+}
+
 public struct LinkGroup: Codable, Identifiable, Equatable, Sendable {
     public var id: UUID
     public var name: String
     public var links: [LinkItem]
+    /// Couleur du titre du groupe dans le menu ; nil = couleur normale du menu.
+    public var color: String?
 
-    public init(id: UUID = UUID(), name: String, links: [LinkItem] = []) {
+    public init(id: UUID = UUID(), name: String, links: [LinkItem] = [], color: String? = nil) {
         self.id = id
         self.name = name
         self.links = links
+        self.color = color
     }
 }
 

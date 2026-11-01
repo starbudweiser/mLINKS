@@ -22,6 +22,8 @@
 "detail.target" = "Cible";
 "detail.visible" = "Afficher dans le menu";
 "group.add" = "Ajouter un groupe";
+"group.color" = "Couleur dans le menu";
+"group.color.none" = "Aucune couleur";
 "group.default" = "Général";
 "group.delete.text" = "Les %d liens de ce groupe seront retirés de mLINKS. Aucun fichier n'est modifié.";
 "group.delete.title" = "Supprimer le groupe « %@ » ?";

@@ -23,6 +23,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         store.refreshTargets()
         updates.startAutomaticChecks()
         runUpdateTestFlags()
+        if CommandLine.arguments.contains("--dump-menu") { dumpMenu(); exit(0) } // essai : le menu tel qu'il serait construit, couleurs comprises
 
         // Essais : la fenêtre s'ouvre derrière le travail en cours, sans prendre le focus.
         if CommandLine.arguments.contains("--gestion-discrete") { ManagerWindow.show(store: store, quietly: true) }
@@ -69,6 +70,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         } else {
             for group in groups {
                 let item = NSMenuItem(title: group.name, action: nil, keyEquivalent: "")
+                if let color = MenuStyle.color(hex: group.color) { item.attributedTitle = MenuStyle.colored(group.name, color) }
                 let submenu = NSMenu()
                 submenu.autoenablesItems = false
                 addLinks(of: group, to: submenu)
@@ -88,7 +90,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         case .idle, .checking:
             menu.addItem(command(L("update.check"), #selector(checkUpdateClicked)))
         }
-        menu.addItem(command(L("menu.manage"), #selector(manageClicked)))
+        let manage = command(L("menu.manage"), #selector(manageClicked))
+        manage.attributedTitle = MenuStyle.colored(L("menu.manage"), NSColor(Socle.C.action)) // jaune Socle
+        menu.addItem(manage)
         menu.addItem(command(L("about.menu"), #selector(aboutClicked)))
         menu.addItem(command(L("menu.quit"), #selector(NSApplication.terminate(_:)), target: NSApp))
     }
@@ -96,6 +100,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func command(_ title: String, _ action: Selector, target: AnyObject? = nil) -> NSMenuItem {
         let item = NSMenuItem(title: title, action: action, keyEquivalent: "")
         item.target = target ?? self
+        if let branded = MenuStyle.branded(title) { item.attributedTitle = branded } // « À propos de mLINKS », « Quitter mLINKS »
         return item
     }
 
@@ -176,6 +181,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         alert.informativeText = text
         NSApp.activate()
         alert.runModal()
+    }
+
+    /// Décrit chaque entrée du menu avec la couleur de ses portions de titre (sortie standard).
+    private func dumpMenu() {
+        guard let menu = statusItem?.menu else { return }
+        menuNeedsUpdate(menu)
+        func hex(_ c: NSColor) -> String {
+            let rgb = c.usingColorSpace(.sRGB) ?? c
+            return String(format: "#%02X%02X%02X", Int((rgb.redComponent * 255).rounded()), Int((rgb.greenComponent * 255).rounded()), Int((rgb.blueComponent * 255).rounded()))
+        }
+        for item in menu.items where !item.isAlternate {
+            if item.isSeparatorItem { print("———"); continue }
+            var parts: [String] = []
+            if let attributed = item.attributedTitle {
+                attributed.enumerateAttribute(.foregroundColor, in: NSRange(location: 0, length: attributed.length)) { value, range, _ in
+                    let text = (attributed.string as NSString).substring(with: range)
+                    parts.append("[\(text)]" + ((value as? NSColor).map { "=\(hex($0))" } ?? ""))
+                }
+            }
+            print(item.title, parts.isEmpty ? "(titre normal)" : parts.joined(separator: " "))
+        }
     }
 
     /// Essais sans interface : `--check-update` écrit la dernière version et quitte ; `--install-update` installe.
