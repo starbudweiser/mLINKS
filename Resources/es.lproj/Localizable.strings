@@ -61,15 +61,7 @@
 "status.hidden" = "Oculto";
 "status.missing" = "No encontrado";
 "update.check" = "Buscar actualizaciones…";
-"update.error.check" = "No se puede acceder a GitHub. Compruebe su conexión e inténtelo de nuevo.";
-"update.error.check.title" = "No se puede buscar";
-"update.error.download" = "Ha fallado la descarga. Su versión actual no se ha modificado; inténtelo más tarde.";
-"update.error.notwritable" = "No se puede reemplazar mLINKS donde está. Mueva la aplicación a una carpeta de su propiedad e inténtelo de nuevo.";
-"update.error.title" = "No se puede actualizar";
-"update.error.verify" = "La actualización no está firmada por el autor de mLINKS y se ha rechazado. Su versión actual no se ha modificado.";
 "update.install" = "Instalar la versión %@…";
 "update.installing" = "Actualizando…";
-"update.uptodate.text" = "Usa la última versión (%@).";
-"update.uptodate.title" = "mLINKS está actualizado";
 "welcome.text" = "Añada sus aplicaciones, carpetas y archivos, o recupere sus enlaces de QuickLinks. QuickLinks no se modifica.";
 "welcome.title" = "Todavía no hay enlaces";

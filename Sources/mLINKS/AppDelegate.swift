@@ -6,7 +6,7 @@ import mLINKSCore
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let store = LinkStore(directory: LinkStore.defaultDirectory)
-    let updates = UpdateManager()
+    let updates = UpdateEngine.shared  // mise à jour automatique commune (_tools/shared/Updater.swift)
     private var statusItem: NSStatusItem?
     private var observers: [NSObjectProtocol] = []
 
@@ -21,8 +21,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         store.bindHotkeys()
         store.refreshTargets()
-        updates.startAutomaticChecks()
-        runUpdateTestFlags()
+        updates.configure(repo: "mLINKS", lang: { Bundle.main.preferredLocalizations.first ?? "en" })
+        updates.autoCheck = { UserDefaults.standard.object(forKey: "autoUpdate") as? Bool ?? true }
+        updates.start()
         if CommandLine.arguments.contains("--dump-menu") { dumpMenu(); exit(0) } // essai : le menu tel qu'il serait construit, couleurs comprises
 
         // Essais : la fenêtre s'ouvre derrière le travail en cours, sans prendre le focus.
@@ -81,13 +82,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         menu.addItem(.separator())
         switch updates.state {
-        case .available(let release):
-            menu.addItem(command(L("update.install", release.version.description), #selector(installUpdateClicked)))
-        case .installing:
+        case .available(let plan):
+            menu.addItem(command(L("update.install", plan.target.version), #selector(installUpdateClicked)))
+        case .downloading, .verifying, .installing:
             let busy = NSMenuItem(title: L("update.installing"), action: nil, keyEquivalent: "")
             busy.isEnabled = false
             menu.addItem(busy)
-        case .idle, .checking:
+        case .idle, .checking, .upToDate, .failed:
             menu.addItem(command(L("update.check"), #selector(checkUpdateClicked)))
         }
         let manage = command(L("menu.manage"), #selector(manageClicked))
@@ -147,40 +148,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if let id = sender.representedObject as? UUID, let link = store.library.link(id) { Opener.reveal(link) }
     }
 
-    @objc private func checkUpdateClicked() {
-        Task {
-            let result = await updates.check()
-            switch result {
-            case .success(let release?):
-                offer(release)
-            case .success(nil):
-                alert(L("update.uptodate.title"), L("update.uptodate.text", updates.currentVersion?.description ?? "?"))
-            case .failure:
-                alert(L("update.error.check.title"), L("update.error.check"))
-            }
-        }
-    }
+    @objc private func checkUpdateClicked() { updates.checkNow() }
 
     @objc private func installUpdateClicked() {
-        guard case .available(let release) = updates.state else { return }
-        offer(release)
-    }
-
-    /// Le clic sur le menu vaut accord : l'installation démarre aussitôt, sans fenêtre de confirmation.
-    private func offer(_ release: ReleaseInfo) {
-        Task {
-            if let failure = await updates.install(release) {
-                alert(L("update.error.title"), L(failure.key))
-            }
-        }
-    }
-
-    private func alert(_ title: String, _ text: String) {
-        let alert = NSAlert()
-        alert.messageText = title
-        alert.informativeText = text
-        NSApp.activate()
-        alert.runModal()
+        guard case .available(let plan) = updates.state else { return }
+        updates.present(plan)  // fenêtre : notes de version, puis « Installer et relancer »
     }
 
     /// Décrit chaque entrée du menu avec la couleur de ses portions de titre (sortie standard).
@@ -201,26 +173,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 }
             }
             print(item.title, parts.isEmpty ? "(titre normal)" : parts.joined(separator: " "))
-        }
-    }
-
-    /// Essais sans interface : `--check-update` écrit la dernière version et quitte ; `--install-update` installe.
-    private func runUpdateTestFlags() {
-        let arguments = CommandLine.arguments
-        guard arguments.contains("--check-update") || arguments.contains("--install-update") else { return }
-        Task {
-            switch await updates.check() {
-            case .success(let release?):
-                print("disponible : \(release.version) (actuelle \(updates.currentVersion?.description ?? "?"))")
-                if arguments.contains("--install-update") {
-                    if let failure = await updates.install(release) { print("échec : \(failure.key)"); exit(1) }
-                    return
-                }
-            case .success(nil): print("à jour")
-            case .failure(let error): print("erreur : \(error)"); exit(1)
-            }
-            fflush(stdout)
-            exit(0)
         }
     }
 

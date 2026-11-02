@@ -61,15 +61,7 @@
 "status.hidden" = "Masqué";
 "status.missing" = "Introuvable";
 "update.check" = "Rechercher les mises à jour…";
-"update.error.check" = "Impossible de joindre GitHub. Vérifiez votre connexion, puis réessayez.";
-"update.error.check.title" = "Recherche impossible";
-"update.error.download" = "Le téléchargement a échoué. Votre version actuelle n'est pas modifiée ; réessayez plus tard.";
-"update.error.notwritable" = "Impossible de remplacer mLINKS à son emplacement. Déplacez l'appli dans un dossier dont vous êtes propriétaire, puis réessayez.";
-"update.error.title" = "Mise à jour impossible";
-"update.error.verify" = "La mise à jour n'est pas signée par l'auteur de mLINKS : elle a été refusée. Votre version actuelle n'est pas modifiée.";
 "update.install" = "Installer la version %@…";
 "update.installing" = "Mise à jour en cours…";
-"update.uptodate.text" = "Vous utilisez la dernière version (%@).";
-"update.uptodate.title" = "mLINKS est à jour";
 "welcome.text" = "Ajoutez vos applications, dossiers et fichiers, ou reprenez vos liens QuickLinks. QuickLinks n'est pas modifié.";
 "welcome.title" = "Aucun lien pour l'instant";
