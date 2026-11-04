@@ -101,7 +101,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func command(_ title: String, _ action: Selector, target: AnyObject? = nil) -> NSMenuItem {
         let item = NSMenuItem(title: title, action: action, keyEquivalent: "")
         item.target = target ?? self
-        if let branded = MenuStyle.branded(title) { item.attributedTitle = branded } // « À propos de mLINKS », « Quitter mLINKS »
         return item
     }
 
