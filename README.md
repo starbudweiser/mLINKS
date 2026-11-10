@@ -1,10 +1,18 @@
+<p align="center"><img src="assets/mLINKS.png" width="128" alt="mLINKS"></p>
+
 # mLINKS
 
-[![Listed on OpenMacApps](https://openmacapps.com/badge.svg)](https://openmacapps.com/apps/mlinks/)
-
-[Français](README.fr.md)
+[![Listed on OpenMacApps](https://openmacapps.com/badge.svg)](https://openmacapps.com/apps/mlinks/) [![Latest release](https://img.shields.io/github/v/release/starbudweiser/mLINKS)](https://github.com/starbudweiser/mLINKS/releases/latest) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 Your apps, folders, files and web addresses one click away, from the macOS menu bar or with a global keyboard shortcut.
+
+🇬🇧 English · 🇫🇷 [Français](#français)
+
+## About
+
+mLINKS is a personal, from-scratch re-creation of the idea behind [QuickLinks](https://appyogi.com/webapps/index.php?product_id=40&source=com.appyogi.quicklinks&ref=about) by Appyogi. It is not affiliated with Appyogi and shares none of its code or assets.
+
+Authors: Starbudweiser & Claude Code (Anthropic). MIT License, © 2026 Starbudweiser. Provided as is, without warranty.
 
 ## Features
 
@@ -16,6 +24,10 @@ Your apps, folders, files and web addresses one click away, from the macOS menu 
 - **Automatic updates**: checks GitHub releases once a day (can be turned off), verifies the Developer ID signature and notarization, then replaces and relaunches the app from the menu.
 - **Four languages** (French, English, Spanish, Italian), picked from the system language.
 - Dark, flat interface; no Dock icon; optional launch at login.
+
+## Install
+
+**[Download the latest notarized release](https://github.com/starbudweiser/mLINKS/releases/latest)**, unzip it and move **mLINKS.app** to your Applications folder. Requires **macOS 14 Sonoma** or later.
 
 ## Build
 
@@ -30,8 +42,26 @@ swift test          # unit tests
 
 Offscreen checks, without opening any window: `mLINKS --capture out.png`, `--capture-about out.png`, `--import file`.
 
-## About
+## Languages
 
-mLINKS is a personal, from-scratch re-creation of the idea behind [QuickLinks](https://appyogi.com/webapps/index.php?product_id=40&source=com.appyogi.quicklinks&ref=about) by Appyogi. It is not affiliated with Appyogi and shares none of its code or assets.
+English, French, Spanish and Italian. The app follows your Mac's preferred language automatically (English if it is none of these four).
 
-Authors: Starbudweiser & Claude Code (Anthropic). MIT License, © 2026 Starbudweiser. Provided as is, without warranty.
+## Support
+
+Bug reports and suggestions: [GitHub Issues](https://github.com/starbudweiser/mLINKS/issues).
+
+## License
+
+Released under the **MIT License**, © 2026 Starbudweiser. See [LICENSE](LICENSE).
+
+---
+
+## Français
+
+Vos applis, dossiers, fichiers et adresses web à un clic, depuis la barre de menus de macOS ou avec un raccourci clavier global.
+
+La documentation complète en français est dans **[README.fr.md](README.fr.md)**.
+
+Installation : téléchargez la [dernière version notarisée](https://github.com/starbudweiser/mLINKS/releases/latest), décompressez-la et placez **mLINKS.app** dans Applications (macOS 14 Sonoma ou plus récent).
+
+Interface en français, anglais, espagnol et italien, choisie d'après la langue du Mac (anglais sinon). Licence MIT, © 2026 Starbudweiser. Questions et bugs : [Issues GitHub](https://github.com/starbudweiser/mLINKS/issues).
