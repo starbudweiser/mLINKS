@@ -1,5 +1,7 @@
 # mLINKS
 
+[![Listed on OpenMacApps](https://openmacapps.com/badge.svg)](https://openmacapps.com/apps/mlinks/)
+
 [Français](README.fr.md)
 
 Your apps, folders, files and web addresses one click away, from the macOS menu bar or with a global keyboard shortcut.
