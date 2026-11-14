@@ -6,7 +6,10 @@ cd "$(dirname "$0")"
 
 TOOLS=/Volumes/SKYRIM/TOOLS
 DEST="${MLINKS_INSTALL_DIR:-$HOME/Applications/Applications Personnelles}"
-VERSION="${VERSION:-1.1.2}"
+# Sans VERSION, la plus haute entre la dernière publication (étiquette git vX.Y.Z) et 1.1.2 : une copie locale plus basse
+# que la dernière publication serait remplacée par la mise à jour automatique (incident du 14/11/2026 dans SOCiALS).
+LAST_TAG="$(git tag --list 'v[0-9]*' --sort=-v:refname 2>/dev/null | head -1 | sed 's/^v//')"
+VERSION="${VERSION:-$(printf '%s\n' "${LAST_TAG:-0}" 1.1.2 | sort -V | tail -1)}"
 BUILD="$(git rev-list --count HEAD 2>/dev/null || echo 1)"
 
 # Socle vit hors de l'arborescence parcourue par sync_apps.sh : copie reprise à chaque build.
