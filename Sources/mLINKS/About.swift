@@ -49,6 +49,7 @@ enum About {
             icon,
             brandedName(),
             label(L("about.version", version, build), secondary: true),
+            label(L("about.collection"), secondary: true),
             label(L("about.tagline")),
             label("Starbudweiser & Claude Code (Anthropic)", bold: true),
             label(L("about.license")),
@@ -60,7 +61,8 @@ enum About {
         stack.alignment = .centerX
         stack.spacing = 12
         stack.setCustomSpacing(6, after: views[1])
-        stack.setCustomSpacing(18, after: views[2])
+        stack.setCustomSpacing(2, after: views[2])
+        stack.setCustomSpacing(18, after: views[3])
         stack.edgeInsets = NSEdgeInsets(top: 28, left: sideMargin, bottom: 28, right: sideMargin)
         stack.translatesAutoresizingMaskIntoConstraints = false
         // Largeur fixée : le texte garde ses marges de chaque côté quelle que soit la langue.
