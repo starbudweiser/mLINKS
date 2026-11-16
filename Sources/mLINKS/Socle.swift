@@ -120,6 +120,8 @@ enum Socle {
         static let dangerBorder = dynamic(dark: (0.9373, 0.2667, 0.2667, 1), light: (0.8627, 0.1490, 0.1490, 1))
         /// Texte dans un encart d'erreur, sur danger-bg.
         static let dangerSoft = dynamic(dark: (0.9961, 0.7922, 0.7922, 1), light: (0.4980, 0.1137, 0.1137, 1))
+        /// Aplat rouge atténué d'un bouton ou d'une pastille d'état « refusé » sélectionné ; texte text-strong dessus. Moins vif que danger-border.
+        static let dangerFill = dynamic(dark: (0.5725, 0.2078, 0.2078, 1), light: (0.9216, 0.5647, 0.5647, 1))
         /// Contour d'un encart d'information.
         static let infoBorder = dynamic(dark: (0.2196, 0.7412, 0.9725, 1), light: (0.0078, 0.5176, 0.7804, 1))
         /// Texte dans un encart d'information (fond neutre surface-raised, sans aplat de couleur).
@@ -315,7 +317,8 @@ struct SocleField: ViewModifier {
 /// Grille de modules Socle : blocs indépendants en colonnes de même largeur (au moins `minimum`), autant que la
 /// largeur en permet, espacées de `space-4`. Agencement en maçonnerie : chaque bloc se place sous la colonne la plus
 /// courte, à sa hauteur naturelle, sans trou sous un bloc plus court que son voisin. Le module où l'on saisit, sinon
-/// celui que la souris survole, reste net ; les autres s'estompent. Chaque bloc de la grille porte `.socleModule()`.
+/// celui que la souris survole, reste net ; les autres s'estompent. Chaque bloc de la grille porte `.socleModule()`, mais
+/// SEULEMENT si Stéphan a demandé cette mise en avant pour l'appli : sans `.socleModule()`, la grille ne fait que le rangement.
 struct SocleModuleGrid<Content: View>: View {
     var minimum: CGFloat = 550  // 500 px × échelle de texte 1,1
     @ViewBuilder var content: Content
@@ -569,5 +572,84 @@ extension View {
             .allowsHitTesting(false)
             .accessibilityHidden(true)
         }
+    }
+}
+
+/// Touche de clavier (⌥, ⇥…) : symbole au-dessus, nom en `caption`, fond `control`.
+struct SocleKeycap: View {
+    let symbol: String
+    var name: String? = nil
+    var body: some View {
+        VStack(spacing: 2) {
+            Text(symbol).socle(Socle.T.bodyLg).foregroundStyle(Socle.C.textStrong)
+            if let name { Text(name).socle(Socle.T.caption).foregroundStyle(Socle.C.textMuted) }
+        }
+        .frame(minWidth: 44).padding(.horizontal, Socle.M.space2_5).padding(.vertical, 6)
+        .background(Socle.C.control, in: RoundedRectangle(cornerRadius: Socle.M.radius))
+        .accessibilityElement(children: .ignore).accessibilityLabel(name ?? symbol)
+    }
+}
+
+/// Popover d'accueil ou de confirmation (composant Socle `Popover`) : pastille de réussite, titre, ligne de touches,
+/// encart d'information et bouton principal. À plat : aucun verre, flou ni ombre.
+struct SoclePopover<Keys: View>: View {
+    let title: String
+    var noteTitle: String? = nil
+    var note: String? = nil
+    let button: String
+    let action: () -> Void
+    @ViewBuilder var keys: Keys
+
+    var body: some View {
+        VStack(spacing: Socle.M.space4) {
+            Image(systemName: "checkmark").font(.system(size: 22, weight: .bold)).foregroundStyle(.white)
+                .frame(width: 48, height: 48).background(Socle.C.successBorder, in: Circle()).accessibilityHidden(true)
+            Text(title).socle(Socle.T.display).foregroundStyle(Socle.C.textStrong)
+            HStack(spacing: Socle.M.space2) { keys }.socle(Socle.T.body).foregroundStyle(Socle.C.textMuted)
+            if let note {
+                VStack(alignment: .leading, spacing: 4) {
+                    if let noteTitle { Text(noteTitle).socle(Socle.T.labelStrong).foregroundStyle(Socle.C.accentText) }
+                    Text(note).socle(Socle.T.body).foregroundStyle(Socle.C.textMuted).fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading).padding(Socle.M.space3)
+                .background(Socle.C.surfaceRaised, in: RoundedRectangle(cornerRadius: Socle.M.radiusLg))
+                .overlay(RoundedRectangle(cornerRadius: Socle.M.radiusLg).stroke(Socle.C.border, lineWidth: 1))
+            }
+            Button(button.uppercased(), action: action).buttonStyle(SocleButtonStyle(.primary)).fixedSize()
+        }
+        .padding(Socle.M.space6).frame(width: 340)
+        .background(Socle.C.surface, in: RoundedRectangle(cornerRadius: Socle.M.radiusXl))
+        .overlay(RoundedRectangle(cornerRadius: Socle.M.radiusXl).stroke(Socle.C.border, lineWidth: 1))
+    }
+}
+
+// MARK: Menu de la barre de menus (plusieurs écrans)
+
+extension NSStatusItem {
+    /// Ouvre `menu` juste sous l'icône de la barre de menus. À utiliser à la place de `statusItem.menu` et de
+    /// `menu.popUp(positioning:at:in: button)` : avec plusieurs écrans, macOS ouvre alors le menu loin de l'icône ou sur
+    /// le mauvais écran. La position est calculée en coordonnées d'écran à partir de la fenêtre de l'icône (celle de SON
+    /// écran, pas de l'écran actif), puis ramenée dans cet écran.
+    /// Mise en place : `item.menu = nil`, `button.sendAction(on: [.leftMouseUp, .rightMouseUp])`, et dans l'action du
+    /// bouton : `item.socleShow(menu)`.
+    @MainActor func socleShow(_ menu: NSMenu) {
+        guard let button, let w = button.window else { return }
+        let r = w.convertToScreen(button.convert(button.bounds, to: nil))
+        var x = r.minX
+        if let sc = w.screen ?? NSScreen.screens.first(where: { $0.frame.intersects(r) }) {
+            x = min(max(x, sc.frame.minX), sc.frame.maxX - menu.size.width - 4)
+        }
+        menu.popUp(positioning: nil, at: NSPoint(x: x, y: r.minY - 4), in: nil)
+    }
+}
+
+// MARK: Lignes de liste
+
+extension View {
+    /// Texte d'identité d'une ligne (nom d'un compte, d'un fichier, d'une appli…) : jamais sur deux lignes, prioritaire sur
+    /// les colonnes d'état et d'actions (c'est elles qui cèdent la place), tronqué en fin de ligne avec le texte complet en
+    /// infobulle. À poser sur chaque nom d'une liste ; les colonnes d'actions ont une largeur fixe, le surplus va dans un menu « … ».
+    func socleRowName(_ full: String) -> some View {
+        lineLimit(1).truncationMode(.tail).layoutPriority(1).help(full)
     }
 }
