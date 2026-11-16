@@ -16,6 +16,8 @@ mLINKS is part of the **DESKTOP MAC TOOLKIT**, Starbudweiser's collection of mac
 
 Authors: Starbudweiser & Claude Code (Anthropic). MIT License, © 2026 Starbudweiser. Provided as is, without warranty.
 
+![The main window with three link groups (apps, folders, web addresses) and the details panel of the selected link.](docs/screenshot.png)
+
 ## Features
 
 - **Menu bar menu**: your groups as submenus, with icons. Hold ⌥ to reveal an item in Finder instead of opening it.
