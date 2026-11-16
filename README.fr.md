@@ -30,4 +30,6 @@ swift test          # tests unitaires
 
 mLINKS est une recréation personnelle, repartie de zéro, de l'idée de [QuickLinks](https://appyogi.com/webapps/index.php?product_id=40&source=com.appyogi.quicklinks&ref=about) d'Appyogi. Elle n'a aucun lien avec Appyogi et ne partage ni son code ni ses ressources.
 
+mLINKS fait partie du **DESKTOP MAC TOOLKIT**, la collection d'applis macOS de Starbudweiser.
+
 Auteurs : Starbudweiser & Claude Code (Anthropic). Licence MIT, © 2026 Starbudweiser. Fourni en l'état, sans garantie.

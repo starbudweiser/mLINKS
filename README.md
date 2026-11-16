@@ -12,6 +12,8 @@ Your apps, folders, files and web addresses one click away, from the macOS menu 
 
 mLINKS is a personal, from-scratch re-creation of the idea behind [QuickLinks](https://appyogi.com/webapps/index.php?product_id=40&source=com.appyogi.quicklinks&ref=about) by Appyogi. It is not affiliated with Appyogi and shares none of its code or assets.
 
+mLINKS is part of the **DESKTOP MAC TOOLKIT**, Starbudweiser's collection of macOS apps.
+
 Authors: Starbudweiser & Claude Code (Anthropic). MIT License, © 2026 Starbudweiser. Provided as is, without warranty.
 
 ## Features
