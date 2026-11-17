@@ -52,7 +52,7 @@
 "service.added" = "Ajouté à « %@ »";
 "service.added.many" = "%d éléments ajoutés à « %@ »";
 "service.duplicate" = "Déjà dans « %@ »";
-"service.error.nothing" = "Rien à ajouter : sélectionnez un dossier, une application ou une adresse web.";
+"service.error.nothing" = "Rien à ajouter : sélectionnez un volume, un dossier, une application, un fichier ou une adresse web.";
 "service.error.notlink" = "Ce texte n'est pas une adresse web. Sélectionnez une adresse (par exemple celle de la barre d'adresse), puis réessayez.";
 "service.many" = "Ajouter %d éléments dans :";
 "service.one" = "Ajouter « %@ » dans :";

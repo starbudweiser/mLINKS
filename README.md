@@ -23,7 +23,7 @@ Authors: Starbudweiser & Claude Code (Anthropic). MIT License, © 2026 Starbudwe
 - **Menu bar menu**: your groups as submenus, with icons. Hold ⌥ to reveal an item in Finder instead of opening it.
 - **Links to anything**: apps, folders, files and web addresses. A missing target (unplugged disk) is flagged "Not found"; a sleeping external disk never freezes the menu.
 - **Global shortcuts**: one per link, no Accessibility permission needed.
-- **Add from anywhere (Services menu)**: right-click a folder or an app in Finder, or an address selected in the address bar of any browser, then choose **Services › Add to mLINKS**. With several groups, a small picker next to the pointer asks where to place the link; with one, it goes straight in. A short message confirms it, and a link already in the group is not added twice.
+- **Add from anywhere (Services menu)**: right-click a volume, a folder, an app or a file in Finder, or an address selected in the address bar of any browser, then choose **Services › Add to mLINKS**. With several groups, a small picker next to the pointer asks where to place the link; with one, it goes straight in. A short message confirms it, and a link already in the group is not added twice.
 - **Manager window**: create, rename and reorder groups, drag and drop from Finder, hide links from the menu.
 - **Import from QuickLinks**: reads the QuickLinks (Appyogi) database or a `.CSV` export, never modifies them, and never creates duplicates when re-imported. Offered on the welcome screen of an empty library, or with `mLINKS --import file`.
 - **Automatic updates**: checks GitHub releases once a day (can be turned off), verifies the Developer ID signature and notarization, then replaces and relaunches the app from the menu.

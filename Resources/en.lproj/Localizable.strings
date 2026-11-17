@@ -52,7 +52,7 @@
 "service.added" = "Added to “%@”";
 "service.added.many" = "%d items added to “%@”";
 "service.duplicate" = "Already in “%@”";
-"service.error.nothing" = "Nothing to add: select a folder, an app or a web address.";
+"service.error.nothing" = "Nothing to add: select a volume, a folder, an app, a file or a web address.";
 "service.error.notlink" = "This text is not a web address. Select an address (for example the one in the address bar), then try again.";
 "service.many" = "Add %d items to:";
 "service.one" = "Add “%@” to:";

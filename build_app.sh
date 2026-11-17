@@ -71,7 +71,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
             <key>NSMessage</key><string>addToMLinks</string>
             <key>NSPortName</key><string>mLINKS</string>
             <key>NSSendTypes</key><array><string>NSFilenamesPboardType</string></array>
-            <key>NSSendFileTypes</key><array><string>public.folder</string><string>com.apple.application-bundle</string></array>
+            <key>NSSendFileTypes</key><array><string>public.item</string><string>public.folder</string><string>public.volume</string><string>com.apple.application-bundle</string></array>
         </dict>
     </array>
 </dict>
