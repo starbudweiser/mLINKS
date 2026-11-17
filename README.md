@@ -23,7 +23,7 @@ Authors: Starbudweiser & Claude Code (Anthropic). MIT License, © 2026 Starbudwe
 - **Menu bar menu**: your groups as submenus, with icons. Hold ⌥ to reveal an item in Finder instead of opening it.
 - **Links to anything**: apps, folders, files and web addresses. A missing target (unplugged disk) is flagged "Not found"; a sleeping external disk never freezes the menu.
 - **Global shortcuts**: one per link, no Accessibility permission needed.
-- **Add from anywhere (Services menu)**: right-click a volume, a folder, an app or a file in Finder, or an address selected in the address bar of any browser, then choose **Services › Add to mLINKS**. With several groups, a small picker next to the pointer asks where to place the link; with one, it goes straight in. A short message confirms it, and a link already in the group is not added twice.
+- **Add from anywhere (Services menu)**: right-click a volume, a folder, an app or a file in Finder, or an address selected in the address bar of any browser, then open the **Services** submenu at the very bottom of the right-click menu and choose **Add to mLINKS**. With several groups, a small picker next to the pointer asks where to place the link; with one, it goes straight in. A short message confirms it, and a link already in the group is not added twice. See [Add from anywhere](#add-from-anywhere-services-menu) below.
 - **Manager window**: create, rename and reorder groups, drag and drop from Finder, hide links from the menu.
 - **Import from QuickLinks**: reads the QuickLinks (Appyogi) database or a `.CSV` export, never modifies them, and never creates duplicates when re-imported. Offered on the welcome screen of an empty library, or with `mLINKS --import file`.
 - **Automatic updates**: checks GitHub releases once a day (can be turned off), verifies the Developer ID signature and notarization, then replaces and relaunches the app from the menu.
@@ -33,6 +33,20 @@ Authors: Starbudweiser & Claude Code (Anthropic). MIT License, © 2026 Starbudwe
 ## Install
 
 **[Download the latest notarized release](https://github.com/starbudweiser/mLINKS/releases/latest)**, unzip it and move **mLINKS.app** to your Applications folder. Requires **macOS 14 Sonoma** or later.
+
+## Add from anywhere (Services menu)
+
+"Add to mLINKS" lives in the **Services** submenu, the last entry of the right-click menu (it is not a top-level item). It works on:
+
+- a **volume**, a **folder**, an **app** or a **file** selected in Finder;
+- an **address selected as text**, for example in a browser's address bar (a missing `https://` is added).
+
+macOS only shows a service once it is allowed. If **Add to mLINKS** is not in the Services submenu, enable it:
+
+1. Open **System Settings › Keyboard › Keyboard Shortcuts… › Services**.
+2. Tick **Add to mLINKS** under **Files and Folders** (for Finder) and under **Text** (for selected addresses).
+
+If it still does not show after enabling it, quit and relaunch mLINKS once.
 
 ## Build
 
@@ -44,8 +58,6 @@ swift test          # unit tests
 ```
 
 `NO_INSTALL=1 ./build_app.sh` builds `./mLINKS.app` without installing it. Without a local signing identity, the app is signed ad hoc. Links are stored in `~/Library/Application Support/mLINKS/links.json`.
-
-Services appear in the right-click menu on their own. If "Add to mLINKS" is missing, tick it in System Settings › Keyboard › Keyboard Shortcuts › Services (Files and Folders, and Text).
 
 Offscreen checks, without opening any window: `mLINKS --capture out.png`, `--capture-about out.png`, `--capture-chooser out.png`, `--import file`.
 

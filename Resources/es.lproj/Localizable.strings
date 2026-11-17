@@ -71,5 +71,6 @@
 "update.check" = "Buscar actualizaciones…";
 "update.install" = "Instalar la versión %@…";
 "update.installing" = "Actualizando…";
+"welcome.services" = "Consejo: clic derecho en un volumen, carpeta, aplicación, archivo o dirección seleccionada y luego Servicios › Añadir a mLINKS. ¿No aparece? Actívelo en Ajustes del Sistema › Teclado › Atajos de teclado › Servicios.";
 "welcome.text" = "Añada sus aplicaciones, carpetas y archivos, o recupere sus enlaces de QuickLinks. QuickLinks no se modifica.";
 "welcome.title" = "Todavía no hay enlaces";

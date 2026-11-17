@@ -71,5 +71,6 @@
 "update.check" = "Rechercher les mises à jour…";
 "update.install" = "Installer la version %@…";
 "update.installing" = "Mise à jour en cours…";
+"welcome.services" = "Astuce : clic droit sur un volume, un dossier, une application, un fichier ou une adresse sélectionnée, puis Services › Ajouter à mLINKS. Absent ? Cochez-le dans Réglages Système › Clavier › Raccourcis clavier › Services.";
 "welcome.text" = "Ajoutez vos applications, dossiers et fichiers, ou reprenez vos liens QuickLinks. QuickLinks n'est pas modifié.";
 "welcome.title" = "Aucun lien pour l'instant";

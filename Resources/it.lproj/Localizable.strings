@@ -71,5 +71,6 @@
 "update.check" = "Cerca aggiornamenti…";
 "update.install" = "Installa la versione %@…";
 "update.installing" = "Aggiornamento in corso…";
+"welcome.services" = "Suggerimento: clic destro su un volume, cartella, app, file o indirizzo selezionato, poi Servizi › Aggiungi a mLINKS. Non c'è? Attivalo in Impostazioni di Sistema › Tastiera › Scorciatoie da tastiera › Servizi.";
 "welcome.text" = "Aggiungi app, cartelle e file, oppure riprendi i collegamenti di QuickLinks. QuickLinks non viene modificato.";
 "welcome.title" = "Ancora nessun collegamento";

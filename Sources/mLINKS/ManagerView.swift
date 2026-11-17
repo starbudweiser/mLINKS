@@ -175,6 +175,8 @@ struct ManagerView: View {
             Text(L("welcome.title")).socle(Socle.T.heading).foregroundStyle(Socle.C.textStrong)
             Text(L("welcome.text")).socle(Socle.T.body).foregroundStyle(Socle.C.textMuted)
                 .multilineTextAlignment(.center).frame(maxWidth: 380)
+            Text(L("welcome.services")).socle(Socle.T.meta).foregroundStyle(Socle.C.textSubtle)
+                .multilineTextAlignment(.center).frame(maxWidth: 420)
             HStack(spacing: Socle.M.space2) {
                 Button(L("import.quicklinks"), action: importFromQuickLinks).buttonStyle(SocleButtonStyle(.primary)).fixedSize()
                 Button(L("import.csv"), action: importCSV).buttonStyle(SocleButtonStyle(.secondary)).fixedSize()

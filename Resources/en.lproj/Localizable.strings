@@ -71,5 +71,6 @@
 "update.check" = "Check for updates…";
 "update.install" = "Install version %@…";
 "update.installing" = "Updating…";
+"welcome.services" = "Tip: right-click a volume, folder, app, file or selected address, then Services › Add to mLINKS. Not there? Tick it in System Settings › Keyboard › Keyboard Shortcuts › Services.";
 "welcome.text" = "Add your apps, folders and files, or bring in your QuickLinks. QuickLinks is not changed.";
 "welcome.title" = "No links yet";
