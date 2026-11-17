@@ -47,8 +47,11 @@ final class LinkStore: ObservableObject {
 
     // MARK: Ajouts
 
-    /// Ajoute des cibles au groupe donné (le premier groupe, créé au besoin, sinon).
-    func add(targets: [String], to groupID: UUID?, before: UUID? = nil) {
+    /// Ajoute des cibles au groupe donné (le premier groupe, créé au besoin, sinon) ; rend le nombre de liens ajoutés
+    /// (une cible déjà présente dans le groupe est ignorée).
+    @discardableResult
+    func add(targets: [String], to groupID: UUID?, before: UUID? = nil) -> Int {
+        var added = 0
         mutate { library in
             if library.groups.isEmpty { library.groups.append(LinkGroup(name: L("group.default"))) }
             let group = groupID ?? library.groups[0].id
@@ -59,8 +62,10 @@ final class LinkStore: ObservableObject {
                 let link = LinkItem(name: LinkItem.defaultName(for: target), target: target)
                 library.groups[g].links.append(link)
                 library.moveLink(link.id, to: group, before: before)
+                added += 1
             }
         }
+        return added
     }
 
     func importLinks(from url: URL) throws -> ImportReport {

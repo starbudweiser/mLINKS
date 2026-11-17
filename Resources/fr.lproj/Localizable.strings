@@ -50,6 +50,14 @@
 "order.moveto" = "Déplacer vers";
 "order.up" = "Monter";
 "save.failed" = "Impossible d'enregistrer vos liens. Vérifiez qu'il reste de la place sur le disque de démarrage.";
+"service.added" = "Ajouté à « %@ »";
+"service.added.many" = "%d éléments ajoutés à « %@ »";
+"service.duplicate" = "Déjà dans « %@ »";
+"service.error.nothing" = "Rien à ajouter : sélectionnez un dossier, une application ou une adresse web.";
+"service.error.notlink" = "Ce texte n'est pas une adresse web. Sélectionnez une adresse (par exemple celle de la barre d'adresse), puis réessayez.";
+"service.many" = "Ajouter %d éléments dans :";
+"service.one" = "Ajouter « %@ » dans :";
+"service.title" = "Ajouter à mLINKS";
 "settings.autoupdate" = "Mises à jour automatiques";
 "settings.login" = "Lancer à l'ouverture de session";
 "shortcut.clear" = "Effacer";

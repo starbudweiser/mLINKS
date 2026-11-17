@@ -58,6 +58,22 @@ cat > "$APP/Contents/Info.plist" <<PLIST
     <key>LSMinimumSystemVersion</key><string>14.0</string>
     <key>LSUIElement</key><true/>
     <key>NSHumanReadableCopyright</key><string>© 2026 Starbudweiser</string>
+    <key>NSServices</key>
+    <array>
+        <dict>
+            <key>NSMenuItem</key><dict><key>default</key><string>Add to mLINKS</string></dict>
+            <key>NSMessage</key><string>addToMLinks</string>
+            <key>NSPortName</key><string>mLINKS</string>
+            <key>NSSendTypes</key><array><string>NSStringPboardType</string></array>
+        </dict>
+        <dict>
+            <key>NSMenuItem</key><dict><key>default</key><string>Add to mLINKS</string></dict>
+            <key>NSMessage</key><string>addToMLinks</string>
+            <key>NSPortName</key><string>mLINKS</string>
+            <key>NSSendTypes</key><array><string>NSFilenamesPboardType</string></array>
+            <key>NSSendFileTypes</key><array><string>public.folder</string><string>com.apple.application-bundle</string></array>
+        </dict>
+    </array>
 </dict>
 </plist>
 PLIST

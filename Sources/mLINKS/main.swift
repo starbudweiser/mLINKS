@@ -26,7 +26,7 @@ app.setActivationPolicy(.accessory)
 
 /// `--capture <fichier.png>` et `--capture-about <fichier.png>` : rendu hors écran pour vérifier
 /// l'interface sans ouvrir de fenêtre devant le travail en cours.
-for (flag, render) in [("--capture", Capture.manager), ("--capture-about", Capture.about)] {
+for (flag, render) in [("--capture", Capture.manager), ("--capture-about", Capture.about), ("--capture-chooser", AddLink.capture)] {
     if let index = arguments.firstIndex(of: flag), arguments.indices.contains(index + 1) {
         let path = arguments[index + 1]
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {

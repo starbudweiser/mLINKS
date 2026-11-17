@@ -9,6 +9,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let updates = UpdateEngine.shared  // mise à jour automatique commune (_tools/shared/Updater.swift)
     private var statusItem: NSStatusItem?
     private var observers: [NSObjectProtocol] = []
+    private lazy var services = ServicesProvider(store: store)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         Socle.apply()
@@ -21,6 +22,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         store.bindHotkeys()
         store.refreshTargets()
+        NSApp.servicesProvider = services  // menu Services : « Ajouter à mLINKS » (Finder, barre d'adresse…)
+        NSUpdateDynamicServices()
         updates.configure(repo: "mLINKS", lang: { Bundle.main.preferredLocalizations.first ?? "en" })
         updates.autoCheck = { UserDefaults.standard.object(forKey: "autoUpdate") as? Bool ?? true }
         updates.start()

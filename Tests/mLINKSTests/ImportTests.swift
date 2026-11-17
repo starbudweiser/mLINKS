@@ -159,3 +159,17 @@ private func makeDatabase() throws -> URL {
     library.moveGroup(one.id, before: nil)
     #expect(library.groups.map(\.name) == ["3", "2", "1"])
 }
+
+@Test func webTargetFromSelectedText() {
+    #expect(LinkItem.webTarget(fromText: " duckduckgo.com \n") == "https://duckduckgo.com")
+    #expect(LinkItem.webTarget(fromText: "github.com/starbudweiser/mLINKS") == "https://github.com/starbudweiser/mLINKS")
+    #expect(LinkItem.webTarget(fromText: "http://localhost:3000") == "http://localhost:3000")
+    #expect(LinkItem.webTarget(fromText: "https://example.com/a?b=c") == "https://example.com/a?b=c")
+    #expect(LinkItem.webTarget(fromText: "bonjour tout le monde") == nil)
+    #expect(LinkItem.webTarget(fromText: "mot") == nil)
+    #expect(LinkItem.webTarget(fromText: "a..b") == nil)
+    #expect(LinkItem.webTarget(fromText: "javascript://x") == nil)
+    #expect(LinkItem.webTarget(fromText: "file:///tmp/a") == nil)
+    #expect(LinkItem.webTarget(fromText: "") == nil)
+}
+

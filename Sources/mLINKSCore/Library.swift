@@ -47,6 +47,23 @@ public struct LinkItem: Codable, Identifiable, Equatable, Sendable {
         return text.hasPrefix("~") ? (text as NSString).expandingTildeInPath : text
     }
 
+    /// Adresse web tirée d'un texte sélectionné (barre d'adresse d'un navigateur : souvent sans « https:// »).
+    /// Nil si ce n'est pas une adresse : plusieurs mots, pas de point, ou un schéma qui n'est pas du web.
+    public static func webTarget(fromText raw: String) -> String? {
+        let text = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty, text.rangeOfCharacter(from: .whitespacesAndNewlines) == nil else { return nil }
+        if text.contains("://") {
+            guard let scheme = text.components(separatedBy: "://").first?.lowercased(),
+                  ["http", "https", "ftp", "ftps", "sftp"].contains(scheme), isWeb(text) else { return nil }
+            return text
+        }
+        let host = text.split(separator: "/", maxSplits: 1).first.map(String.init) ?? text
+        let labels = host.split(separator: ".", omittingEmptySubsequences: false)
+        guard labels.count >= 2, labels.allSatisfy({ !$0.isEmpty }),
+              host.allSatisfy({ $0.isLetter || $0.isNumber || $0 == "." || $0 == "-" || $0 == ":" }) else { return nil }
+        return "https://" + text
+    }
+
     /// Nom proposé pour une cible : le nom du fichier sans `.app`, ou l'hôte d'une adresse web.
     public static func defaultName(for target: String) -> String {
         if isWeb(target) { return URL(string: target)?.host ?? target }
