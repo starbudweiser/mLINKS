@@ -33,7 +33,7 @@ struct ManagerView: View {
             Divider().overlay(Socle.C.border)
             HStack(spacing: 0) {
                 GroupSidebar(selectedGroup: Binding(get: { group?.id }, set: { selectedGroup = $0; selectedLink = nil }),
-                             groupToDelete: $groupToDelete, importAction: importFromQuickLinks, importCSVAction: importCSV)
+                             groupToDelete: $groupToDelete)
                     .frame(width: 240)
                 Divider().overlay(Socle.C.border)
                 linksColumn
@@ -175,7 +175,10 @@ struct ManagerView: View {
             Text(L("welcome.title")).socle(Socle.T.heading).foregroundStyle(Socle.C.textStrong)
             Text(L("welcome.text")).socle(Socle.T.body).foregroundStyle(Socle.C.textMuted)
                 .multilineTextAlignment(.center).frame(maxWidth: 380)
-            Button(L("import.quicklinks"), action: importFromQuickLinks).buttonStyle(SocleButtonStyle(.primary)).fixedSize()
+            HStack(spacing: Socle.M.space2) {
+                Button(L("import.quicklinks"), action: importFromQuickLinks).buttonStyle(SocleButtonStyle(.primary)).fixedSize()
+                Button(L("import.csv"), action: importCSV).buttonStyle(SocleButtonStyle(.secondary)).fixedSize()
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -280,8 +283,6 @@ private struct GroupSidebar: View {
     @EnvironmentObject private var store: LinkStore
     @Binding var selectedGroup: UUID?
     @Binding var groupToDelete: LinkGroup?
-    let importAction: () -> Void
-    let importCSVAction: () -> Void
     @State private var renaming: UUID?
     @State private var startAtLogin = SMAppService.mainApp.status == .enabled
     @State private var hoveredGroup: UUID?
@@ -317,13 +318,6 @@ private struct GroupSidebar: View {
             Spacer(minLength: 0)
             Divider().overlay(Socle.C.border)
             VStack(alignment: .leading, spacing: Socle.M.space2) {
-                Menu(L("import.menu")) {
-                    Button(L("import.quicklinks"), action: importAction)
-                    Button(L("import.csv"), action: importCSVAction)
-                }
-                .menuStyle(.button)
-                .buttonStyle(SocleButtonStyle(.secondary))
-                .fixedSize()
                 Toggle(L("settings.login"), isOn: Binding(get: { startAtLogin }, set: setLogin))
                     .toggleStyle(.checkbox)
                     .socle(Socle.T.body)

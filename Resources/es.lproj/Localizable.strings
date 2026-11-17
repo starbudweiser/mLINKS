@@ -37,7 +37,6 @@
 "import.error.notfound" = "QuickLinks no tiene base de enlaces en este Mac. Importe una exportación .CSV.";
 "import.error.unreadable" = "No se puede leer la base de QuickLinks. Autorice el acceso a los datos de QuickLinks o importe una exportación .CSV.";
 "import.hotkeys.dropped" = "No se han conservado %d atajos que ya estaban en uso.";
-"import.menu" = "Importar";
 "import.quicklinks" = "Importar desde QuickLinks";
 "links.count" = "%d enlaces";
 "menu.empty" = "Ningún enlace";

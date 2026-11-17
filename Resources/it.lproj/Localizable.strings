@@ -37,7 +37,6 @@
 "import.error.notfound" = "QuickLinks non ha un archivio di collegamenti su questo Mac. Importa un'esportazione .CSV.";
 "import.error.unreadable" = "Impossibile leggere l'archivio di QuickLinks. Consenti l'accesso ai dati di QuickLinks o importa un'esportazione .CSV.";
 "import.hotkeys.dropped" = "%d scorciatoie già in uso non sono state riprese.";
-"import.menu" = "Importa";
 "import.quicklinks" = "Importa da QuickLinks";
 "links.count" = "%d collegamenti";
 "menu.empty" = "Nessun collegamento";

@@ -37,7 +37,6 @@
 "import.error.notfound" = "QuickLinks has no link database on this Mac. Import a .CSV export instead.";
 "import.error.unreadable" = "The QuickLinks database cannot be read. Allow access to QuickLinks data, or import a .CSV export.";
 "import.hotkeys.dropped" = "%d shortcuts already in use were not kept.";
-"import.menu" = "Import";
 "import.quicklinks" = "Import from QuickLinks";
 "links.count" = "%d links";
 "menu.empty" = "No links";

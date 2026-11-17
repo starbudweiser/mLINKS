@@ -25,7 +25,7 @@ Authors: Starbudweiser & Claude Code (Anthropic). MIT License, © 2026 Starbudwe
 - **Global shortcuts**: one per link, no Accessibility permission needed.
 - **Add from anywhere (Services menu)**: right-click a folder or an app in Finder, or an address selected in the address bar of any browser, then choose **Services › Add to mLINKS**. With several groups, a small picker next to the pointer asks where to place the link; with one, it goes straight in. A short message confirms it, and a link already in the group is not added twice.
 - **Manager window**: create, rename and reorder groups, drag and drop from Finder, hide links from the menu.
-- **Import from QuickLinks**: reads the QuickLinks (Appyogi) database or a `.CSV` export, never modifies them, and never creates duplicates when re-imported.
+- **Import from QuickLinks**: reads the QuickLinks (Appyogi) database or a `.CSV` export, never modifies them, and never creates duplicates when re-imported. Offered on the welcome screen of an empty library, or with `mLINKS --import file`.
 - **Automatic updates**: checks GitHub releases once a day (can be turned off), verifies the Developer ID signature and notarization, then replaces and relaunches the app from the menu.
 - **Four languages** (French, English, Spanish, Italian), picked from the system language.
 - Dark, flat interface; no Dock icon; optional launch at login.
