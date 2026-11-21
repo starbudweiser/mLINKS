@@ -84,3 +84,9 @@ La documentation complète en français est dans **[README.fr.md](README.fr.md)*
 Installation : téléchargez la [dernière version notarisée](https://github.com/starbudweiser/mLINKS/releases/latest), décompressez-la et placez **mLINKS.app** dans Applications (macOS 14 Sonoma ou plus récent).
 
 Interface en français, anglais, espagnol et italien, choisie d'après la langue du Mac (anglais sinon). Licence MIT, © 2026 Starbudweiser. Questions et bugs : [Issues GitHub](https://github.com/starbudweiser/mLINKS/issues).
+
+## Support / Soutenir
+
+This app is free. If it is useful to you, you can support the project (optional, no reward expected): [GitHub Sponsors](https://github.com/sponsors/starbudweiser).
+
+Cette appli est gratuite. Si elle vous est utile, vous pouvez soutenir le projet (facultatif, sans contrepartie) : [GitHub Sponsors](https://github.com/sponsors/starbudweiser).
